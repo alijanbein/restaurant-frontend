@@ -39,3 +39,8 @@ export const menuData = [
   { category: "specials", type: "food", name: "SURF & TURF", description: "Grilled steak and shrimp with herb butter", price: "35.00" },
   { category: "specials", type: "food", name: "DUCK BREAST", description: "Served with cherry glaze and potato mash", price: "30.00" },
 ];
+
+
+export const categoreisDemo = [
+  "desserts","drinks","sides","specials"
+]

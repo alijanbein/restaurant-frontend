@@ -4,14 +4,15 @@ import { IoRestaurant } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
 
 const  BranchCard = ({
-    branchName = ""
+    branchName = "",
+    id =""
 }) => {
     const navigate = useNavigate();
 
     const clickHandler = () => {
         console.log("nav");
         
-        navigate("/menu")
+        navigate(`/menu/${id}`)
     }
 
   return (

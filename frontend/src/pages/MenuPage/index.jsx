@@ -5,100 +5,126 @@ import { menuData } from "../../DEMO/menuData";
 import myImage from "../../assets/icons/restaurent_icon.png";
 import MenuItemCard from "../../components/MenuPageComponents/MenuItemCard";
 import NavButton from "../../components/MenuPageComponents/NavButton";
-
+import { useParams } from "react-router-dom";
+import { categoreisDemo } from "../../DEMO/menuData";
+import UseHttp from "../../hooks/httpHook";
+import ImageToIcon from "../../components/shared/ImageToIcon";
+import { Sidebar } from "primereact/sidebar";
+import MenuHeader from "../../components/shared/MenuHeader";
+import Swal from "sweetalert2";
+import "sweetalert2/src/sweetalert2.scss";
 const MenuPage = () => {
-  const [selectedCategory, setSelectedCategory] = useState("starters");
+  const [selectedCategory, setSelectedCategory] = useState(1);
+  const [categoreis, setCategories] = useState(categoreisDemo);
   const [items, setItems] = useState([]);
-
+  const [visible, setVisible] = useState(false);
+  const [currentLanguage, setCurrentLanguage] = useState("En");
+  const id = useParams();
+  const [isLoading, error, sendRequest] = UseHttp();
   useEffect(() => {
-    const filtered = menuData.filter((item) => item.category === selectedCategory);
-    setItems(filtered);
+    const fetchData = async () => {
+      const currentCategorie = await sendRequest(
+        `menuItem/by_category_id/${selectedCategory}`
+      );
+      console.log(currentCategorie);
+
+      setItems(currentCategorie);
+    };
+    fetchData();
   }, [selectedCategory]);
 
-  const handleCategoryClick = (category) => {
-    setSelectedCategory(category);
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await sendRequest("Category");
+      setCategories(response);
+      const defaultCategorie = await sendRequest(
+        `menuItem/by_category_id/${response[0].id}`
+      );
+      setItems(defaultCategorie);
+    };
+    fetchData();
+  }, []);
+
+  const openSideBar = () => {
+    Swal.fire({
+      title: "Ingredients",
+      text: `
+    70g chicken ,
+
+    barbcu sause  ,
+    20g bread,
+    5g pickle,
+    
+ `,
+ footer:"430 kcal",
+    });
   };
 
-  const renderMenuItems = () =>
-    items.map((item, idx) => {
-      if (item.type === "separator") {
-        return (
-          <div className="menu-separator" key={idx}>
-            {item.description}
-          </div>
-        );
-      } else if (item.type === "food" || item.type === "drink") {
-        return (
-          <MenuItemCard
-            key={idx}
-            myImage={myImage}
-            idx={idx}
-            name={item.name}
-            description={item.description}
-            price={item.price}
-          />
-        );
-      }
-      return null;
-    });
+  const handleCategoryClick = (category_id) => {
+    setSelectedCategory(category_id);
+  };
+
+  const changeLanguageHandler = (lang) => {
+    setCurrentLanguage(lang);
+  };
+  console.log(currentLanguage);
 
   return (
-    <div className="container">
-      <div className="header">
-        <div className="title">Menu</div>
-      </div>
+    <>
+      <MenuHeader
+        currentLanguage={currentLanguage}
+        changeLanguageHandler={changeLanguageHandler}
+      />
+      <div className="container">
+        <div className="header">
+          <div className="title">Menu</div>
+        </div>
 
-      <div className="navi">
-        <div >
-          <button className="nav-button" onClick={() => handleCategoryClick("starters")}>
-            <div className="navi-icon"><i className="fas fa-seedling"></i></div>
-            <div className="navi-text">Starters</div>
-          </button>
+        <div className="navi">
+          {categoreis.map((item, key) => (
+            <NavButton
+              key={key}
+              id={item.id}
+              handleCategoryClick={handleCategoryClick}
+              icon={<ImageToIcon src={item.image_url} className="navi-icon" />}
+              categoryName={item[`name_${currentLanguage.toLowerCase()}`]}
+            />
+          ))}
         </div>
-        <div>
-          <button className="nav-button" onClick={() => handleCategoryClick("mains")}>
-            <div className="navi-icon"><i className="fas fa-pizza-slice"></i></div>
-            <div className="navi-text">Mains</div>
-          </button>
-        </div>
-        <div>
-          <button className="nav-button" onClick={() => handleCategoryClick("desserts")}>
-            <div className="navi-icon"><i className="fas fa-ice-cream"></i></div>
-            <div className="navi-text">Desserts</div>
-          </button>
-        </div>
-        <div >
-          <button className="nav-button" onClick={() => handleCategoryClick("drinks")}>
-            <div className="navi-icon"><i className="fas fa-wine-glass-alt"></i></div>
-            <div className="navi-text">Drinks</div>
-          </button>
-        </div>
-        {/* <div >
-          <button className="nav-button" onClick={() => handleCategoryClick("sides")}>
-            <div className="navi-icon"><i className="fas fa-utensils"></i></div>
-            <div className="navi-text">Sides</div>
-          </button>
-        </div> */}
-        <NavButton handleCategoryClick={handleCategoryClick} icon={
-          <i className="fas fa-utensils"></i>
-        } categoryName="Sides" />
-        <div >
-          <button className="nav-button" onClick={() => handleCategoryClick("specials")}>
-            <div className="navi-icon"><i className="fas fa-star"></i></div>
-            <div className="navi-text">Specials</div>
-          </button>
-        </div>
-        <div >
-          <button className="nav-button" onClick={() => handleCategoryClick("specials")}>
-            <div className="navi-icon"><i className="fas fa-star"></i></div>
-            <div className="navi-text">Specials</div>
-          </button>
-        </div>
-    
-      </div>
+        {/* <Sidebar visible={visible} onHide={() => setVisible(false)}>
+          <h2>Ingridient</h2>
+          <p>70g chicken</p>
+          <br />
+          <p> barbcu sause</p>
+          <br />
+          <p>20g bread</p>
+          <br />
+          <p>5g pickle</p>
+          <br />
+          <h2>Calories</h2>
+          <p>430 kcal</p>
+          <br />
+        </Sidebar> */}
 
-      <div className="menu">{renderMenuItems()}</div>
-    </div>
+        <div className="menu">
+          {items.map((item, idx) => {
+            return (
+              <MenuItemCard
+                key={idx}
+                myImage={myImage}
+                idx={idx}
+                name={item[`name_${currentLanguage.toLowerCase()}`]}
+                description={
+                  item[`description_${currentLanguage.toLowerCase()}`]
+                }
+                price={item.price_usd}
+                onShowSpecial={openSideBar}
+              />
+            );
+          })}
+        </div>
+      </div>
+    </>
   );
 };
 

@@ -1,21 +1,20 @@
 import React from "react";
-
+import { Card } from 'primereact/card';
 function NavButton({
-    handleCategoryClick = ()=>{},icon = null, categoryName = "null" 
+    handleCategoryClick = ()=>{},icon = null, categoryName = "null",id = null 
 }) {
   return (
-    <div>
+    <Card>
       <button
         className="nav-button"
-        onClick={() => handleCategoryClick(categoryName)}
+        onClick={() => handleCategoryClick(id)}
       >
         <div className="navi-icon">
-          {/* <i className="fas fa-utensils"></i> */}
           {icon}
         </div>
         <div className="navi-text">{categoryName}</div>
       </button>
-    </div>
+    </Card>
   );
 }
 

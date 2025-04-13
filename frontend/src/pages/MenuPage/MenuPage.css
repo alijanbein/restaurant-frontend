@@ -38,37 +38,42 @@ html, body {
   font-size: 70px;
   text-align: center;
   line-height: 1;
+  margin-bottom: 40px;
 }
 
 /* Navigation Bar */
 .navi {
   display: flex;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   gap: 10px;
-  justify-content: space-between;
-  padding-bottom: 10px;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: space-evenly;
+
 }
 
 .navi > div {
-  flex: 1 1 calc(25% - 10px);
   min-width: 150px;
   max-width: calc(25% - 10px);
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100px;
+  max-height: 100px;
+  padding: 10px 20px;
+  border-radius: var(--radius);
+  background: linear-gradient(145deg, #e6e4da, #ffffff);
+  box-shadow: 6px 6px 10px #cfcdc4, -6px -6px 10px #ffffff;
 }
 
 .nav-button {
   height: 70px;
   width: 100%;
   border-radius: var(--radius);
-  background: linear-gradient(145deg, #e6e4da, #ffffff);
-  box-shadow: 6px 6px 10px #cfcdc4, -6px -6px 10px #ffffff;
+ 
   font-weight: 700;
   cursor: pointer;
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   justify-content: center;
   align-items: center;
 }
@@ -82,6 +87,7 @@ html, body {
   font-size: 0.9em;
   font-weight: 300;
   text-align: center;
+  margin-left: 7px;
 }
 
 /* Category Colors */
@@ -96,6 +102,8 @@ html, body {
   overflow-y: auto;
   padding: 10px 0;
   min-height: 700px;
+  
+  
 }
 
 /* Menu Item Styles */
@@ -112,37 +120,43 @@ html, body {
   box-shadow: 6px 6px 10px #c7c5bd, -6px -6px 10px #ffffff;
 }
 
+.menu-item-info {
+  width: 65%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+}
+
+.menu-item-description {
+}
+
+.menu-special-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.menu-special{
+  cursor: pointer;
+}
+
 .menu-item-name {
-  font-weight: 700;
-  line-height: 50px;
+  font-weight: 900;
+  line-height: 20px;
 }
 .menu-item-price {
+  margin: 0;
+  line-height: 20px;
+
   font-weight: 700;
-  line-height: 100px;
   text-align: center;
 }
 
-.drink-item {
-  display: grid;
-  grid-template-columns: auto 30px 90px;
-  margin: 15px 0;
-  padding: 10px 30px;
-  border-radius: var(--radius);
-  background: linear-gradient(145deg, #ffffff, #e6e4da);
-  box-shadow: 6px 6px 10px #c7c5bd, -6px -6px 10px #ffffff;
-}
-.drink-item-name {
-  font-weight: 700;
-  line-height: 50px;
-}
-.drink-item-description {
-  line-height: 50px;
-}
-.drink-item-price {
-  font-weight: 700;
-  line-height: 50px;
-  text-align: center;
-}
+
 
 .menu-separator {
   margin: 35px 0 15px;
@@ -164,13 +178,14 @@ html, body {
     white-space: nowrap;
     scroll-snap-type: x mandatory;
     overflow-y: hidden;
-    height: 350px;
+    min-height: 100px;
   }
 
   .navi > div {
     flex: 0 0 auto;
     scroll-snap-align: start;
   }
+
 }
 
 /* Prevent unwanted element styles */
