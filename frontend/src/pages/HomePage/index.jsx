@@ -34,7 +34,6 @@ function HomePage() {
     <div className="home">
       <ImageToIcon
         className="image-icon"
-        local
         width={"20%"}
         height={"35%"}
         src={restaurenICon}

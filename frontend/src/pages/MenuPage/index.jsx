@@ -19,7 +19,9 @@ const MenuPage = () => {
   const [items, setItems] = useState([]);
   const [visible, setVisible] = useState(false);
   const [currentLanguage, setCurrentLanguage] = useState("En");
-  const id = useParams();
+  const id = useParams().id;
+  console.log(id);
+  
   const [isLoading, error, sendRequest] = UseHttp();
   useEffect(() => {
     const fetchData = async () => {
@@ -35,7 +37,7 @@ const MenuPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await sendRequest("Category");
+      const response = await sendRequest(`Category/by_branch_id/${id}`);
       setCategories(response);
       const defaultCategorie = await sendRequest(
         `menuItem/by_category_id/${response[0].id}`
@@ -86,7 +88,8 @@ const MenuPage = () => {
               key={key}
               id={item.id}
               handleCategoryClick={handleCategoryClick}
-              icon={<ImageToIcon src={item.image_url} className="navi-icon" />}
+              icon={<ImageToIcon src={`http://localhost:3000${item.image_url}`} className="navi-icon" />}
+              // icon={<ImageToIcon src={`http://localhost:3000/images/1745175024837-restaurant.png`} className="navi-icon" />}
               categoryName={item[`name_${currentLanguage.toLowerCase()}`]}
             />
           ))}
