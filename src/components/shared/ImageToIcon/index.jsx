@@ -3,8 +3,8 @@ import React from "react";
 const ImageToIcon = ({
   src,
   alt = "",
-  width = "40px",
-  height = "40px",
+  width = "20px",
+  height = "20px",
   className = "",
 }) => {
   return (

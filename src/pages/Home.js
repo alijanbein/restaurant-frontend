@@ -1,48 +1,70 @@
-import { motion } from "framer-motion";
-import React, { useEffect, useState } from "react";
-import "./HomePage.css";
-import ImageToIcon from "../components/shared/ImageToIcon";
-import restaurenICon from "../assets/icons/restaurent_icon.png";
-import Spacer from "../components/shared/Spacer";
-import BranchCard from "../components/HomePageComponents/BranchCard";
-function HomePage() {
-  const [branches, setBranches] = useState([]);
+  import { motion } from "framer-motion";
+  import React, { useEffect, useState } from "react";
+  import "./HomePage.css";
+  import ImageToIcon from "../components/shared/ImageToIcon";
+  import restaurenICon from "../assets/icons/restaurent_icon.png";
+  import BranchCard from "../components/HomePageComponents/BranchCard";
 
-  const id = 1;
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch(`branch/by_restaurant_id/${id}`);
-      if (!response.ok) {
-        console.log("response error");
-        return;
-      }
-      const data = await response.json();
-      if (data) {
-        setBranches(data);
-      }
-    };
-    fetchData();
-  }, []);
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="home"
-    >
-      <ImageToIcon
-        className="image-icon"
-        width={"20%"}
-        height={"35%"}
-        src={restaurenICon}
-      />
-      <Spacer color="#858585" thickness="1px" margin="32px 0" />
-      <p>choose a branch</p>
-      {branches?.map((item) => (
-        <BranchCard key={item.id} id={item.id} branchName={item.location} />
-      ))}
-    </motion.div>
-  );
-}
+  function HomePage() {
+    const [branches, setBranches] = useState([]);
 
-export default HomePage;
+    const id = 1; // Replace with dynamic restaurant ID if needed
+
+    useEffect(() => {
+      const fetchData = async () => {
+        const response = await fetch(`branch/by_restaurant_id/${id}`);
+        if (!response.ok) {
+          console.log("response error");
+          return;
+        }
+        const data = await response.json();
+        if (data) {
+          setBranches(data);
+        }
+      };
+      fetchData();
+    }, []);
+
+    return (
+      <div className="page-wrapper">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.6 }}
+          className="content-container"
+        >
+          {/* Header Section */}
+          <div className="header-section">
+            <h1 className="page-title">Choose Your Branch</h1>
+             <div className="underline"></div>
+          </div>
+
+          {/* Branches Section */}
+          <div className="branches-section">
+            <div className="branches-wrapper">
+              {branches?.map((item, index) => (
+                <motion.div
+                  key={item.id}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ 
+                    duration: 0.4, 
+                    delay: index * 0.1 
+                  }}
+                  className="branch-item"
+                >
+                  <BranchCard 
+                    id={item.id} 
+                    branchName={item.location} 
+                  />
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    );
+  }
+
+  export default HomePage;
