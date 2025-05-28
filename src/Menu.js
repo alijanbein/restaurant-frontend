@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { MdExpandMore } from "react-icons/md";
 import { FcInfo } from "react-icons/fc";
+import { SiNike } from "react-icons/si";
 import Swal from "sweetalert2";
 
 const url = "http://localhost:3000";
@@ -55,31 +56,39 @@ const Menu = ({ items, lang }) => {
     // Dish Details
     info += `<h3 style="color: #2c3e50; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 15px;">Dish Info</h3>`;
     info += `<div style="margin-left: 10px;">`;
-    info += `<p><strong>Calories:</strong> ${
-      objectToShow?.calories || "N/A"
-    }</p>`;
-    info += `<p><strong>Vegetarian:</strong> ${
-      objectToShow?.is_vegetarian ? "✅ Yes" : "❌ No"
-    }</p>`;
-    info += `<p><strong>Vegan:</strong> ${
-      objectToShow?.is_vegan ? "✅ Yes" : "❌ No"
-    }</p>`;
-    info += `<p><strong>Gluten-Free:</strong> ${
-      objectToShow?.is_gluten_free ? "✅ Yes" : "❌ No"
-    }</p>`;
-    info += `<p><strong>Spice Level:</strong> ${
-      objectToShow?.spice_level || "N/A"
-    }</p>`;
-    info += `<p><strong>Available:</strong> ${
-      objectToShow?.available ? "✅ Yes" : "❌ No"
-    }</p>`;
+    objectToShow?.calories
+      ? (info += `<p><strong>Calories:</strong> ${objectToShow?.calories}</p>`)
+      : "";
+
+    objectToShow?.spice_level
+      ? (info += `<p><strong>Spice Level:</strong> ${objectToShow?.spice_level}</p>`)
+      : "";
+    objectToShow?.is_vegetarian
+      ? (info += `<p><strong>Vegetarian:</strong> ${
+          objectToShow?.is_vegetarian ? "✔" : ""
+        }</p>`)
+      : "";
+    objectToShow?.is_vegan
+      ? (info += `<p><strong>Vegan:</strong> ${
+          objectToShow?.is_vegan ? "✔" : ""
+        }</p>`)
+      : "";
+    objectToShow?.is_gluten_free
+      ? (info += `<p><strong>Gluten-Free:</strong> ${
+          objectToShow?.is_gluten_free ? "✔" : ""
+        }</p>`)
+      : "";
+    // objectToShow?.available
+    //   ? (info += `<p><strong>Available:</strong> ${
+    //       objectToShow?.available ? " ✅" : ""
+    //     }</p>`)
+    //   : "";
     info += `</div>`;
     info += `</div>`;
 
     Swal.fire({
       title: "Dish Details",
       html: info,
-      icon: "info",
       showCloseButton: true,
       showConfirmButton: false,
       background: "#f8f9fa",
