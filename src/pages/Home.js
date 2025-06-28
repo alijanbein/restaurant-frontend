@@ -12,7 +12,7 @@
 
     useEffect(() => {
       const fetchData = async () => {
-        const response = await fetch(`branch/by_restaurant_id/${id}`);
+        const response = await fetch(`https://restaurant-backend-kyo9.onrender.com/branch/by_restaurant_id/${id}`);
         if (!response.ok) {
           console.log("response error");
           return;

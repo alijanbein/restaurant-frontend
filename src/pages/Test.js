@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 function Test() {
   const [branches, setBranches] = useState([]);
-  const url = "http://localhost:3000";
+  const url = "https://restaurant-backend-kyo9.onrender.com/";
   const id = 1;
   const navigate = useNavigate();
   useEffect(() => {
