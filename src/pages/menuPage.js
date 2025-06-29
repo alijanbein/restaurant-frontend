@@ -13,7 +13,7 @@ const MenuPage = () => {
 
   const id = useParams().id;
 
-  const url = "https://restaurant-backend-kyo9.onrender.com/";
+  const url = "https://restaurant-backend-kyo9.onrender.com";
 
   useEffect(() => {
     const fetchCategories = async () => {

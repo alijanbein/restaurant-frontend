@@ -4,7 +4,7 @@ import { FcInfo } from "react-icons/fc";
 import { SiNike } from "react-icons/si";
 import Swal from "sweetalert2";
 
-const url = "https://restaurant-backend-kyo9.onrender.com/";
+const url = "https://restaurant-backend-kyo9.onrender.com";
 
 const Menu = ({ items, lang }) => {
   const [ingredients, setIngredients] = useState([]);
@@ -144,7 +144,7 @@ const Menu = ({ items, lang }) => {
         return (
           <article key={id} className="menu-item">
             <img
-              src={`https://restaurant-backend-kyo9.onrender.com/${menuItem.image_url}`}
+              src={`https://restaurant-backend-kyo9.onrender.com${image_url}`}
               alt={name_en}
               className="photo"
             />
